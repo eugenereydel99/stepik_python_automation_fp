@@ -72,8 +72,8 @@ class ProductPage(BasePage):
             *ProductPageLocators.SUCCESS_MESSAGE
         ), "Success message should have disappeared, but it didn't"
 
-    def should_be_add_to_cart(self):
+    def should_be_add_to_basket(self):
         add_to_cart_btn = self.browser.find_element(
-            *ProductPageLocators.ADD_TO_CART_BUTTON
+            *ProductPageLocators.ADD_TO_BASKET_BUTTON
         )
         add_to_cart_btn.click()

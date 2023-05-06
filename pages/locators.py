@@ -4,7 +4,12 @@ from selenium.webdriver.common.by import By
 class BasePageLocators:
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    BASKET_BUTTON = (By.CSS_SELECTOR, ".basket-mini a.btn")
 
+
+class BasketPageLocators:
+    PRODUCTS_IN_BASKET_MESSAGE = (By.CSS_SELECTOR, "form.basket_summary")
+    BASKET_IS_EMPTY_MESSAGE = (By.CSS_SELECTOR, "#content_inner > p")
 
 class LoginPageLocators:
     # Группа локаторов для формы 'Войти'
@@ -22,7 +27,7 @@ class LoginPageLocators:
 
 
 class ProductPageLocators:
-    ADD_TO_CART_BUTTON = (By.CSS_SELECTOR, ".btn-add-to-basket")
+    ADD_TO_BASKET_BUTTON = (By.CSS_SELECTOR, ".btn-add-to-basket")
     PRODUCT_NAME = (By.CSS_SELECTOR, ".product_main > h1")
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".product_main .price_color")
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-safe .alertinner strong")
