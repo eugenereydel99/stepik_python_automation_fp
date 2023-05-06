@@ -1,15 +1,12 @@
 import math
-import time
 
-from selenium.common.exceptions import NoAlertPresentException
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 
 
 class BasePage:
-    def __init__(self, browser, url, timeout=10) -> None:
+    def __init__(self, browser, url) -> None:
         self.browser = browser
         self.url = url
-        self.browser.implicitly_wait(timeout)
 
     def open(self):
         self.browser.get(url=self.url)
@@ -34,3 +31,5 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+        self.should_be_match_attributes()

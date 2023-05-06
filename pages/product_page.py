@@ -1,3 +1,7 @@
+import selenium.webdriver.support.expected_conditions as EC
+from selenium.common import TimeoutException
+from selenium.webdriver.support.wait import WebDriverWait
+
 from pages.base_page import BasePage
 from pages.locators import ProductPageLocators
 
@@ -12,7 +16,7 @@ class ProductPage(BasePage):
 
     def get_product_name_from_alert(self) -> str:
         return self.browser.find_element(
-            *ProductPageLocators.PRODUCT_NAME_ALERT
+            *ProductPageLocators.SUCCESS_MESSAGE
         ).text
 
     def get_product_price(self) -> str:
@@ -22,7 +26,7 @@ class ProductPage(BasePage):
 
     def get_product_price_from_alert(self) -> str:
         return self.browser.find_element(
-            *ProductPageLocators.PRODUCT_PRICE_ALERT
+            *ProductPageLocators.PRODUCT_PRICE_MESSAGE
         ).text
 
     def is_product_name_match(self):
@@ -39,10 +43,37 @@ class ProductPage(BasePage):
         self.is_product_name_match()
         self.is_product_price_match()
 
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(
+                EC.presence_of_element_located((how, what))
+            )
+        except TimeoutException:
+            return True
+        return False
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(
+            *ProductPageLocators.SUCCESS_MESSAGE
+        ), "Success message is presented, but should not be"
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(
+                EC.presence_of_element_located((how, what))
+            )
+        except TimeoutException:
+            return False
+        return True
+
+    def should_be_element_disappeared(self):
+        assert self.is_disappeared(
+            *ProductPageLocators.SUCCESS_MESSAGE
+        ), "Success message should have disappeared, but it didn't"
+
     def should_be_add_to_cart(self):
         add_to_cart_btn = self.browser.find_element(
             *ProductPageLocators.ADD_TO_CART_BUTTON
         )
         add_to_cart_btn.click()
-        self.solve_quiz_and_get_code()
-        self.should_be_match_attributes()

@@ -1,12 +1,6 @@
 import pytest
 
 from pages.product_page import ProductPage
-import pytest
-
-from pages.product_page import ProductPage
-
-
-# link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
 
 
 @pytest.mark.parametrize(
@@ -28,4 +22,34 @@ from pages.product_page import ProductPage
 def test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser=browser, url=link)
     page.open()
-    page.should_be_add_to_cart()
+    page.should_be_add_to_cart()  # добавляем в корзину
+    page.solve_quiz_and_get_code()  # рассчитываем значение из алерта
+    page.should_be_match_attributes()  # проверка соответствия атрибутов товара
+
+
+@pytest.mark.negative
+@pytest.mark.xfail
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser=browser, url=link)
+    page.open()
+    page.should_be_add_to_cart()  # добавляем в корзину
+    page.should_not_be_success_message()  # проверяем, что нет сообщения об успехе
+
+
+@pytest.mark.negative
+def test_guest_cant_see_success_message(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser=browser, url=link)
+    page.open()
+    page.should_not_be_success_message()  # проверяем, что нет сообщения об успехе
+
+
+@pytest.mark.negative
+@pytest.mark.xfail
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser=browser, url=link)
+    page.open()
+    page.should_be_add_to_cart()  # добавляем в корзину
+    page.should_be_element_disappeared()  # проверяем, что элемент исчез
