@@ -21,6 +21,11 @@ class BasePage:
             return False
         return True
 
+    def should_be_authorized_user(self):
+        assert self.is_element_present(
+            *BasePageLocators.USER_ICON
+        ), "User icon is not presented, probably unauthorised user"
+
     def go_to_basket_page(self):
         basket_btn = self.browser.find_element(
             *BasePageLocators.BASKET_BUTTON
@@ -51,5 +56,3 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
-
-        self.should_be_match_attributes()

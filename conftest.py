@@ -1,4 +1,5 @@
 import pytest
+from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -10,6 +11,11 @@ def pytest_addoption(parser):
         default="en",
         help="choose preferred language"
     )
+
+
+@pytest.fixture(scope="function")
+def faker_instance():
+    return Faker()
 
 
 @pytest.fixture(scope="function", autouse=False)

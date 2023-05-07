@@ -5,6 +5,33 @@ from pages.login_page import LoginPage
 from pages.product_page import ProductPage
 
 
+@pytest.mark.authorized
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser, faker_instance):
+        link = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+        page = LoginPage(browser=browser, url=link)
+        page.open()
+        page.register_new_user(
+            email=faker_instance.email(),
+            password=faker_instance.password()
+        )
+        page.should_be_authorized_user()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser=browser, url=link)
+        page.open()
+        page.should_be_add_to_basket()  # добавляем в корзину
+
+    @pytest.mark.negative
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser=browser, url=link)
+        page.open()
+        page.should_not_be_success_message()  # проверяем, что нет сообщения об успехе
+
+
 @pytest.mark.parametrize(
     'link',
     [
