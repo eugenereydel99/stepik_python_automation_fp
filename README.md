@@ -16,3 +16,17 @@ source /bin/activate - для Linux и macOS
 ```sh
 pip install -r requirements.txt
 ```
+
+## Генерация тестовых отчетов в Allure
+
+Создаём директорию для хранения сгенерированных отчетов (например: allure_reports)
+
+Указываем для pytest директорию для хранения отчетов:
+```sh
+pytest --alluredir="allure_reports" 
+```
+
+После прогона тестов, его результаты сохранятся в указанную директорию, после чего можно запустить сервер для просмотра результатов:
+```sh
+allure serve allure_reports 
+```
