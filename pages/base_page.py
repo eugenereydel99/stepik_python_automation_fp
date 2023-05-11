@@ -1,5 +1,6 @@
 import math
 
+import allure
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 
 from pages.locators import BasePageLocators
@@ -11,6 +12,7 @@ class BasePage:
         self.browser = browser
         self.url = url
 
+    @allure.step(title=f"Открытие тестовой страницы в браузере")
     def open(self):
         self.browser.get(url=self.url)
 
@@ -43,6 +45,7 @@ class BasePage:
             *BasePageLocators.LOGIN_LINK
         ), "Login link is not presented"
 
+    @allure.step(title="Рассчитываем значение из алерта и отправляем на сервер")
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]

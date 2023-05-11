@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from pages.basket_page import BasketPage
@@ -50,16 +51,18 @@ class TestUserAddToBasketFromProductPage:
         "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"
     ]
 )
+@allure.severity(allure.severity_level.BLOCKER)
 def test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser=browser, url=link)
     page.open()
-    page.should_be_add_to_basket()  # добавляем в корзину
-    page.solve_quiz_and_get_code()  # рассчитываем значение из алерта
+    page.should_be_add_to_basket()
+    page.solve_quiz_and_get_code()
     page.should_be_match_attributes()  # проверка соответствия атрибутов товара
 
 
 @pytest.mark.negative
 @pytest.mark.xfail
+@allure.severity(allure.severity_level.CRITICAL)
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     page = ProductPage(browser=browser, url=link)
@@ -78,6 +81,7 @@ def test_guest_cant_see_success_message(browser):
 
 @pytest.mark.negative
 @pytest.mark.xfail
+@allure.severity(allure.severity_level.CRITICAL)
 def test_message_disappeared_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     page = ProductPage(browser=browser, url=link)
