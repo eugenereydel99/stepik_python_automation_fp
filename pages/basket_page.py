@@ -1,3 +1,4 @@
+import allure
 import selenium.webdriver.support.expected_conditions as EC
 from selenium.common import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
@@ -18,11 +19,13 @@ class BasketPage(BasePage):
             return True
         return False
 
+    @allure.step(title="Проверка отсутствия товаров в корзине")
     def should_not_be_products_in_basket(self):
         assert self.is_not_element_present(
             *BasketPageLocators.PRODUCTS_IN_BASKET_MESSAGE
         ), "There are products in the basket, but should not be"
 
+    @allure.step(title="Проверка наличия текста об отсутствии товаров в корзине")
     def should_be_text_about_basket_is_empty(self):
         assert self.is_element_present(
             *BasketPageLocators.BASKET_IS_EMPTY_MESSAGE

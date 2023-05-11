@@ -23,23 +23,31 @@ class BasePage:
             return False
         return True
 
+    @allure.step(title="Проверка на то, что пользователь авторизован")
     def should_be_authorized_user(self):
         assert self.is_element_present(
             *BasePageLocators.USER_ICON
         ), "User icon is not presented, probably unauthorised user"
 
+    @allure.step(title="Переход на страницу корзины")
     def go_to_basket_page(self):
-        basket_btn = self.browser.find_element(
-            *BasePageLocators.BASKET_BUTTON
-        )
-        basket_btn.click()
+        with allure.step(title="Поиск кнопки для перехода"):
+            basket_btn = self.browser.find_element(
+                *BasePageLocators.BASKET_BUTTON
+            )
+        with allure.step(title="Нажатие на кнопку для перехода"):
+            basket_btn.click()
 
+    @allure.step(title="Переход на страницу авторизации")
     def go_to_login_page(self):
-        login_link = self.browser.find_element(
-            *BasePageLocators.LOGIN_LINK
-        )
-        login_link.click()
+        with allure.step(title="Поиск ссылки для перехода"):
+            login_link = self.browser.find_element(
+                *BasePageLocators.LOGIN_LINK
+            )
+        with allure.step(title="Нажатие на ссылку перехода"):
+            login_link.click()
 
+    @allure.step(title="Проверка наличия ссылки на авторизацию пользователя")
     def should_be_login_link(self):
         assert self.is_element_present(
             *BasePageLocators.LOGIN_LINK

@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from pages.basket_page import BasketPage
@@ -8,6 +9,7 @@ link = "http://selenium1py.pythonanywhere.com/"
 
 
 @pytest.mark.login_guest
+@allure.severity(allure.severity_level.BLOCKER)
 class TestLoginFromMainPage:
     def test_guest_can_go_to_login_page(self, browser):
         page = MainPage(browser=browser, url=link)
@@ -22,6 +24,7 @@ class TestLoginFromMainPage:
         page.should_be_login_link()
 
 
+@allure.severity(allure.severity_level.BLOCKER)
 def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     page = MainPage(browser=browser, url=link)
     page.open()
